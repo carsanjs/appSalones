@@ -1,46 +1,43 @@
-import Animated, {
-  useSharedValue,
-  withTiming,
-  useAnimatedStyle,
-  Easing,
-} from "react-native-reanimated";
-import { View, Button } from "react-native";
+// In App.js in a new project
 
-export default function AnimatedStyleUpdateExample(props) {
-  const randomWidth = useSharedValue(10);
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import LoginScreen from "./screens/LoginScreens";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBar} from "react-native";
 
-  const config = {
-    duration: 500,
-    easing: Easing.bezier(0.5, 0.01, 0, 1),
-  };
+import MyDrawer from "./Navigation";
 
-  const style = useAnimatedStyle(() => {
-    return {
-      width: withTiming(randomWidth.value, config),
-    };
-  });
-
+function Dashboard() {
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "column",
-      }}
-    >
-      <Animated.View
-        style={[
-          { width: 100, height: 80, backgroundColor: "black", margin: 30 },
-          style,
-        ]}
-      />
-      <Button
-        title="toggle"
-        onPress={() => {
-          randomWidth.value = Math.random() * 350;
-        }}
-      />
-    </View>
+    <>
+  <MyDrawer/>
+   </>
   );
 }
+
+function Router() {
+  const Stack = createNativeStackNavigator();
+  return (
+    <Stack.Navigator
+      initialRouteName="Index"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="Index" component={LoginScreen} />
+      <Stack.Screen name="Dashboard" component={Dashboard} />
+    </Stack.Navigator>
+  );
+}
+
+function App() {
+  return (
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <StatusBar style="dark" />
+        <Router />
+      </NavigationContainer>
+    </SafeAreaProvider>
+  );
+}
+
+export default App;
