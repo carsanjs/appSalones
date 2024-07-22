@@ -140,4 +140,5 @@ si no instalamos lo siguiente > npm i @expo/vector-icons
 instalamos la libreria drawer de react native
 > npm install @react-navigation/drawer
 
-
+> instalamos jwt-decode para utilizar autentication con JWT
+> npm i jwt-decode [link:](https://www.npmjs.com/package/jwt-decode)
